@@ -7,7 +7,7 @@ on:
       - "develop"
 
 jobs:
-  build:
+  build1:
     runs-on: ubuntu-latest
     outputs:
       deploy_env: "PRD"
@@ -25,10 +25,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
-      name: ${{ needs.build.outputs.deploy_env }}
+      name: ${{ needs.build1.outputs.deploy_env }}
     steps:
       - name: simple output
         env:
-          DEPLOY_ENV: ${{ needs.build.outputs.deploy_env }}
+          DEPLOY_ENV: ${{ needs.build1.outputs.deploy_env }}
         run: |
           echo "Deploying to ${DEPLOY_ENV}"
