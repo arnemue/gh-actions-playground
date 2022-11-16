@@ -10,7 +10,7 @@ jobs:
   build1:
     runs-on: ubuntu-latest
     outputs:
-      deploy_env: "PRD"
+      deploy_env: ${{ steps.set_dep_env.outputs.deploy_env }}
     steps:
       - name: Switch between PREPRD and PRD based on branch
         id: set_dep_env
