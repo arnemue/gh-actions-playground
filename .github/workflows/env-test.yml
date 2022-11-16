@@ -24,6 +24,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    needs: build1
     environment:
       name: ${{ needs.build1.outputs.deploy_env }}
     steps:
