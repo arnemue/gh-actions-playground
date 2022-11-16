@@ -1,0 +1,34 @@
+name: environment-test
+
+on:
+  push:
+    branches:
+      - "main"
+      - "develop"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      deploy_env: ${{ steps.set_dep_env.outputs.deploy_env }}
+    steps:
+      - name: Switch between PREPRD and PRD based on branch
+        id: set_dep_env
+        env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+        run: |
+          [[ ${BRANCH_NAME} == "main" ]] && DEPLOY_ENV="PRD" || DEPLOY_ENV="PREPRD"
+          echo "deploy_env=${DEPLOY_ENV}" >> $GITHUB_OUTPUT
+
+
+
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ needs.build.outputs.deploy_env }}
+    steps:
+      - name: simple output
+        env:
+          DEPLOY_ENV: ${{ needs.build.outputs.deploy_env }}
+        run: |
+          echo "Deploying to ${DEPLOY_ENV}"
