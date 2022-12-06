@@ -1,0 +1,26 @@
+name: Test dummy workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        description: Environment to deploy
+        type: string
+        default: preprd
+      run_id:
+        description: run id to download a model artifact from model registry
+        required: true
+        type: string
+        default: "123"
+
+
+
+jobs:
+
+  test_dummy_step:
+    uses: arnemue/gh-actions-reusable-workflows/.github/workflows/build_and_deploy.yaml@master
+    with:
+      environment: ${{ inputs.environment }}
+      run_id: ${{ inputs.run_id }}
+    secrets: inherit
