@@ -19,7 +19,7 @@ on:
 jobs:
 
   test_dummy_step:
-    uses: arnemue/gh-actions-reusable-workflows/.github/workflows/build_and_deploy.yaml@master
+    uses: arnemue/gh-actions-reusable-workflows/.github/workflows/build_and_deploy.yaml@main
     with:
       environment: ${{ inputs.environment }}
       run_id: ${{ inputs.run_id }}
