@@ -20,7 +20,14 @@ jobs:
           [[ ${BRANCH_NAME} == "main" ]] && DEPLOY_ENV="PRD" || DEPLOY_ENV="PREPRD"
           echo "deploy_env=${DEPLOY_ENV}" >> $GITHUB_OUTPUT
 
-
+      - name: Store secret
+        id: step_one
+        run: |
+          echo secret=$(echo should-be-masked) >> $GITHUB_OUTPUT
+      - name: Use the value
+        id: step_two
+        run: |
+          echo "${{ steps.step_one.outputs.deploy_env }}"
 
   deploy:
     runs-on: ubuntu-latest
