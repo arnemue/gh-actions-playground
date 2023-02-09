@@ -26,8 +26,10 @@ jobs:
           echo secret=$(echo should-be-masked) >> $GITHUB_OUTPUT
       - name: Use the value
         id: step_two
+        env:
+          DEPLOY_ENV: ${{ steps.step_one.outputs.deploy_env }}
         run: |
-          echo "${{ steps.step_one.outputs.deploy_env }}"
+          echo "${DEPLOY_ENV}"
 
   deploy:
     runs-on: ubuntu-latest
