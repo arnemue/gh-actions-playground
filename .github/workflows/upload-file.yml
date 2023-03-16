@@ -24,4 +24,4 @@ jobs:
         export AZCOPY_SPA_CLIENT_SECRET=$(echo $AZURE_CREDENTIALS | jq -r '.["clientSecret"]')
         echo "::add-mask::$AZCOPY_SPA_APPLICATION_ID"
         echo "::add-mask::$AZCOPY_SPA_CLIENT_SECRET"
-        azcopy copy .editorconfig "https://mlopsstarter.blob.core.windows.net/democontainer"
+        azcopy copy .github "https://mlopsstarter.blob.core.windows.net/democontainer" --recursive
