@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Upload file
-        env:
-          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      env:
+        AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       run: |
         export AZCOPY_TENANT_ID=$(echo $AZURE_CREDENTIALS | jq -r '.["tenantId"]')
         export AZCOPY_AUTO_LOGIN_TYPE=SPN
