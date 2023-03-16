@@ -10,12 +10,14 @@ jobs:
   copy_manual_files:
     runs-on: ubuntu-latest
     steps:
-
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
     - name: Upload file
+        env:
+          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
       run: |
-       azcopy copy .editorconfig "https://mlopsstarter.blob.core.windows.net/democontainer"
+        export AZCOPY_TENANT_ID=$(echo $AZURE_CREDENTIALS | jq -r '.["tenantId"]')
+        export AZCOPY_AUTO_LOGIN_TYPE=SPN
+        export AZCOPY_SPA_APPLICATION_ID=$(echo $AZURE_CREDENTIALS | jq -r '.["clientId"]')
+        export AZCOPY_SPA_CLIENT_SECRET=$(echo $AZURE_CREDENTIALS | jq -r '.["clientSecret"]')
+        echo "::add-mask::$AZCOPY_SPA_APPLICATION_ID"
+        echo "::add-mask::$AZCOPY_SPA_CLIENT_SECRET"
+        azcopy copy .editorconfig "https://mlopsstarter.blob.core.windows.net/democontainer"
