@@ -1,0 +1,14 @@
+name: Trigger workflow with dispatch not on main branch
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+
+  test_dummy_step:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Just echo hello world
+        run: |
+          echo "HELLO WORLD!"
