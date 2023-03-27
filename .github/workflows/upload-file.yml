@@ -16,8 +16,9 @@ jobs:
 
     - name: Upload file
       env:
-        AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+        SECRET_PREFIX: AZURE
       run: |
+        AZURE_CREDENTIALS="${{ secrets[format('{0}_CREDENTIALS', env.SECRET_PREFIX)] }}"
         export AZCOPY_TENANT_ID=$(echo $AZURE_CREDENTIALS | jq -r '.["tenantId"]')
         export AZCOPY_AUTO_LOGIN_TYPE=SPN
         export AZCOPY_SPA_APPLICATION_ID=$(echo $AZURE_CREDENTIALS | jq -r '.["clientId"]')
